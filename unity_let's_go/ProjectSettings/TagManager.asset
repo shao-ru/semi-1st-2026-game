@@ -14,7 +14,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Slowarea
+  - 
   - 
   - 
   - 
@@ -44,16 +44,16 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: BackGround
-    uniqueID: 276230685
+    uniqueID: 2452371217
     locked: 0
   - name: Stage
-    uniqueID: 3278382231
+    uniqueID: 497230761
     locked: 0
   - name: Enemy
-    uniqueID: 1138539121
+    uniqueID: 1149322057
     locked: 0
   - name: Player
-    uniqueID: 2814175831
+    uniqueID: 2550404663
     locked: 0
   m_RenderingLayers:
   - Default
