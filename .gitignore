@@ -12,7 +12,7 @@
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
-# [Uu]ser[Ss]ettings/
+[Uu]ser[Ss]ettings/
 
 # メモリキャプチャファイルを無視
 [Mm]emoryCaptures/
@@ -52,3 +52,4 @@ Thumbs.db
 
 # VS Code 関連のローカル設定を無視
 .vscode/
+.vs/
