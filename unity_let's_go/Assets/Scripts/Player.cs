@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    //移動スピード(floatなので整数、整数を扱える)
+    // 移動スピード
     [SerializeField] private float moveSpeed = 10.0f;
 
-    //ジャンプ力
+    // ジャンプ力
     [SerializeField] private float jumpForce = 15.0f;
 
     // プレイヤーの足元にある子オブジェクト
@@ -17,82 +17,109 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // 地面のレイヤー
     [SerializeField] private LayerMask groundLayer;
 
-    // 地面に着地しているときはtrue、離れているときはfalse
-   private bool isGrounded = false;
+    // 地面に着地しているか
+    private bool isGrounded = false;
 
-    //プレイヤーのRigidBody2Dを入れる箱
+    // プレイヤーのRigidbody2D
     private Rigidbody2D rb;
 
-    //元々の大きさ
-    private Vector2 defaulttScale;
+    // 元々の大きさ
+    private Vector2 defaultScale;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // 復帰する高さ
+    public float respawnY = 7f;
+
+
     void Start()
     {
-        //プレイヤーのRigidBody2Dを取得してrbに入れる
+        // Rigidbody2Dを取得
         rb = GetComponent<Rigidbody2D>();
 
-        //プレイヤーの元の大きさを代入
-        defaulttScale = transform.localScale;
+        // プレイヤーの元の大きさを保存
+        defaultScale = transform.localScale;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        //自分で作ったWalkメソッドを呼び出す
+        // 左右移動
         Walk();
 
+        // ジャンプ
         Jump();
+
+        // 落下したか確認
+        CheckRespawn();
     }
+
 
     private void Walk()
     {
-        //入力された方向を調べる(右なら1/左なら-1/何も押してなければ0)
+        // 右なら1、左なら-1、何も押していなければ0
         float direction = Input.GetAxisRaw("Horizontal");
 
-        //RigidBody2D(物理演算)の「速度(velocity)」を使って左右に動かす
+        // 左右に移動
         rb.linearVelocityX = direction * moveSpeed;
 
-        // 右に進んでいたら
+        // 右向き
         if (direction > 0)
         {
-           //デフォルトのまま
-           transform.localScale = defaulttScale;
+            transform.localScale = defaultScale;
         }
-        // 左に進んでいたら
+        // 左向き
         else if (direction < 0)
         {
-          //
-          transform.localScale = new Vector2(-defaulttScale.x, defaulttScale.y);
+            transform.localScale = new Vector2(
+                -defaultScale.x,
+                defaultScale.y
+            );
         }
     }
 
-    /// <summary>
-    /// ジャンプメソッド
-    /// WキーまたはSpaceキーを押すとジャンプする
-    /// </summary>   
-    private void Jump()
-   {    
-        // OverlapCircle(円の中心, 円の半径, 検知するレイヤー);
 
-        // 足元のチェッカーが地面を検知したら
-        if (Physics2D.OverlapCircle(groundChecker.position, checkerRadius, groundLayer))
+    private void Jump()
+    {
+        // 地面を検知
+        if (Physics2D.OverlapCircle(
+            groundChecker.position,
+            checkerRadius,
+            groundLayer))
         {
             isGrounded = true;
         }
-        // 検知してないときは
         else
         {
             isGrounded = false;
         }
 
-       // (WキーまたはSpaceキーを押した瞬間)かつisGroundがtrueならば
-       if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && isGrounded == true)
-       {
-        // 上方向に一気に力を加える
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-       }
-   }
+        // WキーまたはSpaceキーでジャンプ
+        if ((Input.GetKeyDown(KeyCode.W) ||
+             Input.GetKeyDown(KeyCode.Space))
+             && isGrounded)
+        {
+            rb.AddForce(
+                Vector2.up * jumpForce,
+                ForceMode2D.Impulse
+            );
+        }
+    }
 
 
+    // 落下したときの復帰処理
+    private void CheckRespawn()
+    {
+        // Y座標が-10より下に落ちたら
+        if (transform.position.y < -10f)
+        {
+            // 3だけ左に戻して、Y=7の高さに復帰
+            transform.position = new Vector3(
+                transform.position.x - 3f,
+                respawnY,
+                transform.position.z
+            );
+
+            // 落下中の速度をリセット
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
 }
