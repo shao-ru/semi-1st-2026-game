@@ -46,6 +46,9 @@ TagManager:
   - name: BackGround
     uniqueID: 2452371217
     locked: 0
+  - name: haikei2
+    uniqueID: 903096001
+    locked: 0
   - name: Stage
     uniqueID: 497230761
     locked: 0
@@ -54,6 +57,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2550404663
+    locked: 0
+  - name: mann
+    uniqueID: 2504850673
     locked: 0
   m_RenderingLayers:
   - Default
