@@ -1,0 +1,71 @@
+# =======================================================
+# 改行コードの扱いを統一する（Unity プロジェクト用）
+# =======================================================
+
+# 基本：テキストは自動判定し、リポジトリ内では LF で保存する
+* text=auto
+
+# Unity が書き出す YAML / .meta は常に LF
+# （Unity は LF で保存するため、CRLF に変換すると「偽の変更」が出る）
+*.unity             text eol=lf
+*.prefab            text eol=lf
+*.asset             text eol=lf
+*.meta              text eol=lf
+*.mat               text eol=lf
+*.anim              text eol=lf
+*.controller        text eol=lf
+*.overrideController text eol=lf
+*.physicMaterial    text eol=lf
+*.physicsMaterial2D text eol=lf
+*.playable          text eol=lf
+*.mixer             text eol=lf
+*.shadervariants    text eol=lf
+*.spriteatlas       text eol=lf
+*.spriteatlasv2     text eol=lf
+*.terrainlayer      text eol=lf
+*.lighting          text eol=lf
+*.preset            text eol=lf
+*.inputactions      text eol=lf
+*.scenetemplate     text eol=lf
+*.shadergraph       text eol=lf
+*.shadersubgraph    text eol=lf
+*.unitypackage      binary
+
+# スクリプト・テキスト（エディタに合わせて自動）
+*.cs        text diff=csharp
+*.shader    text
+*.cginc     text
+*.hlsl      text
+*.json      text
+*.txt       text
+*.md        text
+
+# バイナリ（画像・音声・モデル・フォント）
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.psd   binary
+*.tga   binary
+*.tif   binary
+*.tiff  binary
+*.bmp   binary
+*.exr   binary
+*.hdr   binary
+*.mp3   binary
+*.wav   binary
+*.ogg   binary
+*.aif   binary
+*.aiff  binary
+*.mp4   binary
+*.mov   binary
+*.fbx   binary
+*.obj   binary
+*.blend binary
+*.ttf   binary
+*.otf   binary
+*.dll   binary
+*.pdb   binary
+*.so    binary
+*.a     binary
+*.zip   binary
