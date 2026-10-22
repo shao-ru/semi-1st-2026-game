@@ -30,6 +30,21 @@ public class Player : MonoBehaviour
     public float respawnY = 7f;
 
 
+    // 車に当たったときの吹っ飛び
+
+    // 吹っ飛ぶ強さ
+    [SerializeField] private float knockbackPower = 15.0f;
+
+    // 吹っ飛んでいる時間
+    [SerializeField] private float knockbackTime = 0.5f;
+
+    // 吹っ飛んでいる最中か
+    private bool isKnockback = false;
+
+    // 吹っ飛びタイマー
+    private float knockbackTimer = 0f;
+
+
     void Start()
     {
         // Rigidbody2Dを取得
@@ -42,8 +57,23 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // 左右移動
-        Walk();
+        // 吹っ飛んでいる最中
+        if (isKnockback)
+        {
+            knockbackTimer -= Time.deltaTime;
+
+            // 吹っ飛び時間が終了した
+            if (knockbackTimer <= 0f)
+            {
+                isKnockback = false;
+            }
+        }
+
+        // 吹っ飛んでいないときだけ左右移動
+        if (!isKnockback)
+        {
+            Walk();
+        }
 
         // ジャンプ
         Jump();
@@ -95,11 +125,47 @@ public class Player : MonoBehaviour
         // WキーまたはSpaceキーでジャンプ
         if ((Input.GetKeyDown(KeyCode.W) ||
              Input.GetKeyDown(KeyCode.Space))
-             && isGrounded)
+             && isGrounded
+             && !isKnockback)
         {
             rb.AddForce(
                 Vector2.up * jumpForce,
                 ForceMode2D.Impulse
+            );
+        }
+    }
+
+
+    // 車にぶつかったとき
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 車以外なら何もしない
+        if (!collision.gameObject.CompareTag("Car"))
+        {
+            return;
+        }
+
+        // 吹っ飛び開始
+        isKnockback = true;
+
+        // 吹っ飛び時間をセット
+        knockbackTimer = knockbackTime;
+
+        // 車がプレイヤーの右側にある場合
+        if (collision.transform.position.x > transform.position.x)
+        {
+            // 左に吹っ飛ばす
+            rb.linearVelocity = new Vector2(
+                -knockbackPower,
+                3f
+            );
+        }
+        else
+        {
+            // 右に吹っ飛ばす
+            rb.linearVelocity = new Vector2(
+                knockbackPower,
+                3f
             );
         }
     }
@@ -120,6 +186,12 @@ public class Player : MonoBehaviour
 
             // 落下中の速度をリセット
             rb.linearVelocity = Vector2.zero;
+
+            // 吹っ飛び状態を解除
+            isKnockback = false;
+            knockbackTimer = 0f;
         }
     }
 }
+
+//バナナの謎はまだ謎なのだぞ～
