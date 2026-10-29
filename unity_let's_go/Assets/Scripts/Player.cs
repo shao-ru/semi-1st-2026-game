@@ -1,103 +1,96 @@
+
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // 移動スピード
-    [SerializeField] private float moveSpeed = 10.0f;
-
-    // ジャンプ力
+    public float moveSpeed = 10.0f;
     [SerializeField] private float jumpForce = 15.0f;
 
-    // プレイヤーの足元にある子オブジェクト
     [SerializeField] private Transform groundChecker;
-
-    // 地面をチェックする円の半径
     [SerializeField] private float checkerRadius = 0.1f;
-
-    // 地面のレイヤー
     [SerializeField] private LayerMask groundLayer;
 
-    // 地面に着地しているか
-    private bool isGrounded = false;
-
-    // プレイヤーのRigidbody2D
+    private bool isGrounded;
     private Rigidbody2D rb;
-
-    // 元々の大きさ
     private Vector2 defaultScale;
+    private float moveX;
 
-    // 復帰する高さ
     public float respawnY = 7f;
 
-
-    // 車に当たったときの吹っ飛び
-
-    // 吹っ飛ぶ強さ
     [SerializeField] private float knockbackPower = 15.0f;
-
-    // 吹っ飛んでいる時間
     [SerializeField] private float knockbackTime = 0.5f;
 
-    // 吹っ飛んでいる最中か
-    private bool isKnockback = false;
+    private bool isKnockback;
+    private float knockbackTimer;
+    private bool isFallen = false;
 
-    // 吹っ飛びタイマー
-    private float knockbackTimer = 0f;
-
+    private float defaultGravityScale;
 
     void Start()
     {
-        // Rigidbody2Dを取得
         rb = GetComponent<Rigidbody2D>();
-
-        // プレイヤーの元の大きさを保存
         defaultScale = transform.localScale;
+        defaultGravityScale = rb.gravityScale;
     }
-
 
     void Update()
     {
-        // 吹っ飛んでいる最中
+        if (isFallen)
+        {
+            return;
+        }
+
+        if (transform.position.y < -10f)
+        {
+            CheckRespawn();
+            return;
+        }
+
+        moveX = Input.GetAxisRaw("Horizontal");
+
         if (isKnockback)
         {
             knockbackTimer -= Time.deltaTime;
 
-            // 吹っ飛び時間が終了した
             if (knockbackTimer <= 0f)
             {
                 isKnockback = false;
             }
         }
 
-        // 吹っ飛んでいないときだけ左右移動
         if (!isKnockback)
         {
-            Walk();
+            Jump();
         }
-
-        // ジャンプ
-        Jump();
-
-        // 落下したか確認
-        CheckRespawn();
     }
 
-
-    private void Walk()
+    void FixedUpdate()
     {
-        // 右なら1、左なら-1、何も押していなければ0
-        float direction = Input.GetAxisRaw("Horizontal");
+        if (isFallen)
+        {
+            // 左右移動は禁止、重力による落下は許可
+            rb.linearVelocity = new Vector2(
+                0f,
+                rb.linearVelocity.y
+            );
+            return;
+        }
 
-        // 左右に移動
-        rb.linearVelocityX = direction * moveSpeed;
+        if (isKnockback)
+        {
+            return;
+        }
 
-        // 右向き
-        if (direction > 0)
+        rb.linearVelocity = new Vector2(
+            moveX * moveSpeed,
+            rb.linearVelocity.y
+        );
+
+        if (moveX > 0)
         {
             transform.localScale = defaultScale;
         }
-        // 左向き
-        else if (direction < 0)
+        else if (moveX < 0)
         {
             transform.localScale = new Vector2(
                 -defaultScale.x,
@@ -106,27 +99,22 @@ public class Player : MonoBehaviour
         }
     }
 
-
     private void Jump()
     {
-        // 地面を検知
-        if (Physics2D.OverlapCircle(
-            groundChecker.position,
-            checkerRadius,
-            groundLayer))
+        if (groundChecker == null)
         {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
+            return;
         }
 
-        // WキーまたはSpaceキーでジャンプ
+        isGrounded = Physics2D.OverlapCircle(
+            groundChecker.position,
+            checkerRadius,
+            groundLayer
+        );
+
         if ((Input.GetKeyDown(KeyCode.W) ||
              Input.GetKeyDown(KeyCode.Space))
-             && isGrounded
-             && !isKnockback)
+             && isGrounded)
         {
             rb.AddForce(
                 Vector2.up * jumpForce,
@@ -135,63 +123,77 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    // 車にぶつかったとき
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // 車以外なら何もしない
+        if (isFallen)
+        {
+            return;
+        }
+
         if (!collision.gameObject.CompareTag("Car"))
         {
             return;
         }
 
-        // 吹っ飛び開始
         isKnockback = true;
-
-        // 吹っ飛び時間をセット
         knockbackTimer = knockbackTime;
 
-        // 車がプレイヤーの右側にある場合
         if (collision.transform.position.x > transform.position.x)
         {
-            // 左に吹っ飛ばす
             rb.linearVelocity = new Vector2(
-                -knockbackPower,
-                3f
+                -knockbackPower, 3f
             );
         }
         else
         {
-            // 右に吹っ飛ばす
             rb.linearVelocity = new Vector2(
-                knockbackPower,
-                3f
+                knockbackPower, 3f
             );
         }
     }
 
-
-    // 落下したときの復帰処理
     private void CheckRespawn()
     {
-        // Y座標が-10より下に落ちたら
-        if (transform.position.y < -10f)
-        {
-            // 3だけ左に戻して、Y=7の高さに復帰
-            transform.position = new Vector3(
-                transform.position.x - 3f,
-                respawnY,
-                transform.position.z
-            );
+        // 操作を禁止
+        isFallen = true;
+        moveX = 0f;
+        isKnockback = false;
+        knockbackTimer = 0f;
 
-            // 落下中の速度をリセット
-            rb.linearVelocity = Vector2.zero;
+        // 落下速度を停止して重力を一時停止
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.gravityScale = 0f;
 
-            // 吹っ飛び状態を解除
-            isKnockback = false;
-            knockbackTimer = 0f;
-        }
+        // 左に5移動してY=7へ復帰
+        Vector2 respawnPosition = new Vector2(
+            rb.position.x - 5f,
+            respawnY
+        );
+
+        rb.position = respawnPosition;
+        transform.position = new Vector3(
+            respawnPosition.x,
+            respawnPosition.y,
+            transform.position.z
+        );
+
+        // 物理演算に位置変更を反映
+        Physics2D.SyncTransforms();
+
+        // 速度をリセット
+        rb.linearVelocity = Vector2.zero;
+
+        // 重力を元に戻す
+        rb.gravityScale = defaultGravityScale;
+
+        // 3秒後に操作を再開
+        CancelInvoke(nameof(EnableControl));
+        Invoke(nameof(EnableControl), 3f);
+    }
+
+    private void EnableControl()
+    {
+        isFallen = false;
     }
 }
-
-//バナナの謎はまだ謎なのだぞ～
