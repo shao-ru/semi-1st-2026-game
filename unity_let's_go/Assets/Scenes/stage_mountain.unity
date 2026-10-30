@@ -567,7 +567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   target: {fileID: 958143096}
   minX: 0
-  maxX: 100
+  maxX: 82
   minY: 0
   maxY: 0
 --- !u!1001 &596359276
