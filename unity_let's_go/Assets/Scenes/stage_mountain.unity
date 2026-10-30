@@ -4580,7 +4580,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -4677,8 +4677,8 @@ Transform:
   m_GameObject: {fileID: 1503227401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.072, y: -3.31, z: 0}
-  m_LocalScale: {x: 0.26371077, y: 0.17998023, z: 1}
+  m_LocalPosition: {x: 45.95, y: -3.19, z: 0}
+  m_LocalScale: {x: 0.26371077, y: 0.2422894, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4801,8 +4801,8 @@ Transform:
   m_GameObject: {fileID: 1701854910}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.74, y: -3.099, z: 0}
-  m_LocalScale: {x: 0.26371077, y: 0.17998023, z: 1}
+  m_LocalPosition: {x: 73.74, y: -3.17, z: 0}
+  m_LocalScale: {x: 0.26371077, y: 0.24651892, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4837,7 +4837,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
