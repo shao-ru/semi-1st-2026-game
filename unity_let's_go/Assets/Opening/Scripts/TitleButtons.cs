@@ -11,6 +11,7 @@ public class TitleButtons : MonoBehaviour
  // 前編で作成したメインシーン（ゲーム本編）への遷移処理
     public void StartButton()
     {
+        GlobalTimer.ResetTimer(); // 全体タイマーを最初に戻す
         SceneManager.LoadScene("stage_mountain"); // ゲーム本編の最初のステージ
     }
 
