@@ -9,10 +9,19 @@ EditorBuildSettings:
     path: Assets/Opening/Scenes/Title.unity
     guid: 87ea185fc91e028419837785ec1b2ab1
   - enabled: 1
+    path: Assets/Scenes/stage_mountain.unity
+    guid: cb1c2e0becc093043a530e30e95d57fd
+  - enabled: 1
     path: Assets/Scenes/stage_commute.unity
     guid: 12a8a131d3e065c4db695e23b6bd2725
   - enabled: 1
-    path: Assets/Scenes/stage_mountain.unity
-    guid: cb1c2e0becc093043a530e30e95d57fd
+    path: Assets/Scenes/stage_compus.unity
+    guid: dc16dfe29eaa4944080f79dae0e524f9
+  - enabled: 1
+    path: Assets/Scenes/stage_in_compus.unity
+    guid: 12746f7c646c59d459a1a5c3e549e405
+  - enabled: 1
+    path: Assets/Scenes/stage_class.unity
+    guid: ec51d7d4cdd34214997fd862a3e9cd22
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
