@@ -101,6 +101,11 @@ public class GlobalTimer : MonoBehaviour
         {
             RemainingSeconds = 0f;
             OnTimeUp?.Invoke();
+
+            // --- ここに追記 ---
+            ResetTimer();
+            SceneManager.LoadScene("stage_game_over");
+            // ------------------
         }
     }
 
@@ -146,4 +151,6 @@ public class GlobalTimer : MonoBehaviour
         int total = Mathf.CeilToInt(Mathf.Max(0f, seconds));
         return $"{total / 60}:{total % 60:00}";
     }
+
+
 }
