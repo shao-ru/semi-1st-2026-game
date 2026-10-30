@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement; // ★ シーン遷移に使用
-using System.Collections;          // ★ コルーチン待機に使用
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class AttendanceTimer : MonoBehaviour
 {
@@ -14,31 +14,37 @@ public class AttendanceTimer : MonoBehaviour
     public GameObject portalPanel;       // ポータル画面全体のパネル
 
     [Header("タイマー設定")]
-    public float remainingTime = 1174f; // 19分34秒
+    public float remainingTime = 1174f;
     private bool isRunning = false;
 
     [Header("正解コード")]
     public string correctCode = "1234";
 
     [Header("シーン遷移設定")]
-    public string gameOverSceneName = "GameOverScene"; // ★ 遷移先のシーン名を入力
+    public string clearSceneName = "ClearScene";      // クリア時に移動するシーン名
+    public string gameOverSceneName = "GameOverScene"; // 時間切れ時に移動するシーン名
 
-    // 元の文字色を保持しておくための変数
+    [Header("オーディオ設定")]
+    public AudioSource audioSource;     // 効果音用AudioSource（単発音用）
+    public AudioSource heartbeatSource; // ★ 心臓音専用のAudioSource（Loop設定用）
+    public AudioClip clearSE;           // 正解時の「ぱっぱかパー」効果音
+    public AudioClip heartbeatSE;       // ★ 心臓の鼓動音ファイル
+
     private Color originalTitleColor;
 
     void Start()
     {
-        // タイトルテキストの初期カラーを覚えておく
         if (titleText != null)
         {
             originalTitleColor = titleText.color;
             titleText.text = "出席確認中";
         }
 
-        // 自動で半角にする設定
         if (codeInputField != null)
         {
             codeInputField.onSelect.AddListener(OnInputFieldSelect);
+            // ★ テキストが入力・変更された時のイベントリスナーを追加
+            codeInputField.onValueChanged.AddListener(OnInputChanged);
             SetHalfWidthInput();
         }
 
@@ -78,23 +84,56 @@ public class AttendanceTimer : MonoBehaviour
         isRunning = true;
     }
 
+    // ★ テキストに入力がある間だけ心臓音を鳴らす処理
+    private void OnInputChanged(string input)
+    {
+        // 1文字以上入力されていて、かつタイマー作動中の場合
+        if (!string.IsNullOrEmpty(input) && isRunning)
+        {
+            PlayHeartbeat();
+        }
+        else
+        {
+            StopHeartbeat();
+        }
+    }
+
+    // ★ 心臓音再生
+    private void PlayHeartbeat()
+    {
+        if (heartbeatSource != null && heartbeatSE != null)
+        {
+            if (!heartbeatSource.isPlaying)
+            {
+                heartbeatSource.clip = heartbeatSE;
+                heartbeatSource.loop = true; // 繰り返し再生
+                heartbeatSource.Play();
+            }
+        }
+    }
+
+    // ★ 心臓音停止
+    private void StopHeartbeat()
+    {
+        if (heartbeatSource != null && heartbeatSource.isPlaying)
+        {
+            heartbeatSource.Stop();
+        }
+    }
+
     public void OnSubmit()
     {
+        // 送信したら心臓音を止める
+        StopHeartbeat();
+
         if (codeInputField.text == correctCode)
         {
             // 【正解の時】
             isRunning = false;
 
-            if (titleText != null)
-            {
-                titleText.text = "出席";
-                titleText.color = Color.green;
-            }
+            if (submitButton != null) submitButton.interactable = false;
 
-            Debug.Log("出席登録完了！");
-
-            // 1秒後にパネルを閉じる処理
-            Invoke("ClosePanel", 1.0f);
+            StartCoroutine(GameClearSequence());
         }
         else
         {
@@ -110,6 +149,32 @@ public class AttendanceTimer : MonoBehaviour
         }
     }
 
+    private IEnumerator GameClearSequence()
+    {
+        if (audioSource != null && clearSE != null)
+        {
+            audioSource.PlayOneShot(clearSE);
+        }
+
+        if (titleText != null)
+        {
+            titleText.color = Color.green;
+            titleText.text = "出席";
+        }
+
+        yield return new WaitForSeconds(3.0f);
+
+        if (titleText != null)
+        {
+            titleText.color = Color.yellow;
+            titleText.text = "★！CLEAR! ★";
+        }
+
+        yield return new WaitForSeconds(5.0f);
+
+        SceneManager.LoadScene(clearSceneName);
+    }
+
     private void OnInputFieldSelect(string text)
     {
         Input.imeCompositionMode = IMECompositionMode.Off;
@@ -121,14 +186,11 @@ public class AttendanceTimer : MonoBehaviour
         codeInputField.ActivateInputField();
     }
 
-    void ClosePanel()
-    {
-        if (portalPanel != null) portalPanel.SetActive(false);
-    }
-
-    // ★ 時間切れ時に呼ばれるメソッド
     void TimeUp()
     {
+        // タイムアップ時も心臓音を止める
+        StopHeartbeat();
+
         if (titleText != null)
         {
             titleText.color = originalTitleColor;
@@ -140,27 +202,21 @@ public class AttendanceTimer : MonoBehaviour
             submitButton.interactable = false;
         }
 
-        // コルーチン（非同期処理）を開始
         StartCoroutine(GameOverSequence());
     }
 
-    // ★ 演出とシーン遷移を行う処理
     private IEnumerator GameOverSequence()
     {
-        // 2秒間「欠席」のまま待機
         yield return new WaitForSeconds(2.0f);
 
-        // 「ゲームオーバー」に表示変更
         if (titleText != null)
         {
             titleText.color = Color.white;
             titleText.text = "ゲームオーバー";
         }
 
-        // さらに1.5秒待機
         yield return new WaitForSeconds(1.5f);
 
-        // ゲームオーバーシーンへ移動
         SceneManager.LoadScene(gameOverSceneName);
     }
 }
