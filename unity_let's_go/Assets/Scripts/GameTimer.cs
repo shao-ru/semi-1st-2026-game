@@ -72,6 +72,7 @@ public class GameTimer : MonoBehaviour
     {
         // 時間の進みを元に戻してからシーンを再読み込み
         Time.timeScale = 1f;
+        GlobalTimer.ResetTimer(); // 全体タイマーも最初に戻す
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
