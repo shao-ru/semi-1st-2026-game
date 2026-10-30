@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 72974839}
   - component: {fileID: 72974838}
+  - component: {fileID: 72974840}
   - component: {fileID: 72974837}
   m_Layer: 0
   m_Name: Signal
@@ -270,6 +271,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &72974840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72974836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5868831b39eab54479b932ce90dfef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SignalController
+  greenTime: 2.5
+  redTime: 10
 --- !u!1 &218060793
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +809,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 370, y: 140}
+  m_AnchoredPosition: {x: 788, y: 462}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &397427807
@@ -6999,6 +7014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876158908}
   - component: {fileID: 1876158907}
+  - component: {fileID: 1876158909}
   - component: {fileID: 1876158906}
   - component: {fileID: 1876158905}
   m_Layer: 0
@@ -7140,6 +7156,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1876158909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876158904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4033ff17be10ef344af4a4645f711ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarController
+  minSpawnDelay: 0.5
+  maxSpawnDelay: 1
+  visibleTime: 3
+  signalController: {fileID: 72974840}
 --- !u!1 &1938667389
 GameObject:
   m_ObjectHideFlags: 0

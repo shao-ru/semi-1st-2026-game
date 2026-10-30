@@ -11,7 +11,7 @@ public class TitleButtons : MonoBehaviour
  // 前編で作成したメインシーン（ゲーム本編）への遷移処理
     public void StartButton()
     {
-        SceneManager.LoadScene("stage_commute"); // ゲーム本編の最初のステージ
+        SceneManager.LoadScene("stage_mountain"); // ゲーム本編の最初のステージ
     }
 
     // 設定画面を表示するメソッド（動画内：超コンフィグパネル）[7]

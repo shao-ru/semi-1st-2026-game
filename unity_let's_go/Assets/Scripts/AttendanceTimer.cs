@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement; // ★ シーン遷移に使用
+using System.Collections;          // ★ コルーチン待機に使用
 
 public class AttendanceTimer : MonoBehaviour
 {
@@ -17,6 +19,9 @@ public class AttendanceTimer : MonoBehaviour
 
     [Header("正解コード")]
     public string correctCode = "1234";
+
+    [Header("シーン遷移設定")]
+    public string gameOverSceneName = "GameOverScene"; // ★ 遷移先のシーン名を入力
 
     // 元の文字色を保持しておくための変数
     private Color originalTitleColor;
@@ -60,9 +65,12 @@ public class AttendanceTimer : MonoBehaviour
 
     void UpdateDisplay(float timeToDisplay)
     {
-        int minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        int seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        timerText.text = string.Format("あと <color=#FF5555>{0:00}</color>分<color=#FF5555>{1:00}</color>秒", minutes, seconds);
+        if (timerText != null)
+        {
+            int minutes = Mathf.FloorToInt(timeToDisplay / 60);
+            int seconds = Mathf.FloorToInt(timeToDisplay % 60);
+            timerText.text = string.Format("あと <color=#FF5555>{0:00}</color>分<color=#FF5555>{1:00}</color>秒", minutes, seconds);
+        }
     }
 
     public void StartTimer()
@@ -77,11 +85,10 @@ public class AttendanceTimer : MonoBehaviour
             // 【正解の時】
             isRunning = false;
 
-            // 「出席」と表示し、文字色を緑色に変更
             if (titleText != null)
             {
                 titleText.text = "出席";
-                titleText.color = Color.green; // ★文字色を緑色に変更
+                titleText.color = Color.green;
             }
 
             Debug.Log("出席登録完了！");
@@ -94,7 +101,7 @@ public class AttendanceTimer : MonoBehaviour
             // 【不正解の時】
             if (titleText != null)
             {
-                titleText.color = originalTitleColor; // 元の色に戻す
+                titleText.color = originalTitleColor;
                 titleText.text = "コードが違う";
             }
 
@@ -119,13 +126,41 @@ public class AttendanceTimer : MonoBehaviour
         if (portalPanel != null) portalPanel.SetActive(false);
     }
 
+    // ★ 時間切れ時に呼ばれるメソッド
     void TimeUp()
     {
         if (titleText != null)
         {
-            titleText.color = originalTitleColor; // 元の色に戻す
+            titleText.color = originalTitleColor;
             titleText.text = "欠席";
         }
-        if (submitButton != null) submitButton.interactable = false;
+
+        if (submitButton != null)
+        {
+            submitButton.interactable = false;
+        }
+
+        // コルーチン（非同期処理）を開始
+        StartCoroutine(GameOverSequence());
+    }
+
+    // ★ 演出とシーン遷移を行う処理
+    private IEnumerator GameOverSequence()
+    {
+        // 2秒間「欠席」のまま待機
+        yield return new WaitForSeconds(2.0f);
+
+        // 「ゲームオーバー」に表示変更
+        if (titleText != null)
+        {
+            titleText.color = Color.white;
+            titleText.text = "ゲームオーバー";
+        }
+
+        // さらに1.5秒待機
+        yield return new WaitForSeconds(1.5f);
+
+        // ゲームオーバーシーンへ移動
+        SceneManager.LoadScene(gameOverSceneName);
     }
 }
