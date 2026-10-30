@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Poop2
   slowSpeed: 3
-  slowDuration: 3
+  slowDuration: 2
 --- !u!1 &425501772
 GameObject:
   m_ObjectHideFlags: 0
