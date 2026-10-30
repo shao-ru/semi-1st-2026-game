@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace8f76530c648e0a76437a7cbf03317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GlobalTimer
-  totalSeconds: 300
+  totalSeconds: 10
   pausedScenes:
   - Title
