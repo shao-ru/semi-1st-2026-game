@@ -1,11 +1,19 @@
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
     [SerializeField] private float jumpForce = 15.0f;
+
+    // スピードアップ設定
+    public float speedUp = 15f;
+    public float speedUpTime = 5f;
+
+    private float normalSpeed;
+    private Coroutine speedUpCoroutine;
 
     [SerializeField] private Transform groundChecker;
     [SerializeField] private float checkerRadius = 0.1f;
@@ -32,6 +40,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         defaultScale = transform.localScale;
         defaultGravityScale = rb.gravityScale;
+
+        normalSpeed = moveSpeed;
     }
 
     void Update()
@@ -63,15 +73,12 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
-
-
     }
 
     void FixedUpdate()
     {
         if (isFallen)
         {
-            // 左右移動は禁止、重力による落下は許可
             rb.linearVelocity = new Vector2(
                 0f,
                 rb.linearVelocity.y
@@ -155,42 +162,56 @@ public class Player : MonoBehaviour
         }
     }
 
+    // スピードアップ
+    public void SpeedUp()
+    {
+        if (speedUpCoroutine != null)
+        {
+            StopCoroutine(speedUpCoroutine);
+        }
+
+        speedUpCoroutine = StartCoroutine(SpeedUpCoroutine());
+    }
+
+    IEnumerator SpeedUpCoroutine()
+    {
+        moveSpeed = speedUp;
+
+        yield return new WaitForSeconds(speedUpTime);
+
+        moveSpeed = normalSpeed;
+        speedUpCoroutine = null;
+    }
+
     private void CheckRespawn()
     {
-        // 操作を禁止
         isFallen = true;
         moveX = 0f;
         isKnockback = false;
         knockbackTimer = 0f;
 
-        // 落下速度を停止して重力を一時停止
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.gravityScale = 0f;
 
-        // 左に5移動してY=7へ復帰
         Vector2 respawnPosition = new Vector2(
             rb.position.x - 5f,
             respawnY
         );
 
         rb.position = respawnPosition;
+
         transform.position = new Vector3(
             respawnPosition.x,
             respawnPosition.y,
             transform.position.z
         );
 
-        // 物理演算に位置変更を反映
         Physics2D.SyncTransforms();
 
-        // 速度をリセット
         rb.linearVelocity = Vector2.zero;
-
-        // 重力を元に戻す
         rb.gravityScale = defaultGravityScale;
 
-        // 3秒後に操作を再開
         CancelInvoke(nameof(EnableControl));
         Invoke(nameof(EnableControl), 3f);
     }
