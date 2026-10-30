@@ -34,7 +34,7 @@ public class GlobalTimer : MonoBehaviour
     [SerializeField] private float totalSeconds = 300f;
 
     [Header("タイマーを止めておくシーン（タイトル画面など）")]
-    [SerializeField] private string[] pausedScenes = { "Title" };
+    [SerializeField] private string[] pausedScenes = { "Title", "stage_class" };
 
     /// <summary>残り秒数</summary>
     public float RemainingSeconds { get; private set; }
@@ -88,8 +88,28 @@ public class GlobalTimer : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         RemainingSeconds = totalSeconds;
+
+        // シーン読み込み完了イベントを登録
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDestroy()
+    {
+        // イベント登録を解除（メモリリーク防止）
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
+
+    // シーンが読み込まれるたびに呼ばれる処理
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "stage_mountain")
+        {
+            ResetTimer();
+        }
+    }
     private void Update()
     {
         if (IsTimeUp || !IsRunning) return;
