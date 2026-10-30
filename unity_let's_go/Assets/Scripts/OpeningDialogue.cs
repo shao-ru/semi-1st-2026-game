@@ -13,6 +13,10 @@ public class OpeningDialogue : MonoBehaviour
     [Header("カメラ演出用")]
     public Camera mainCamera;
 
+    [Header("遷移設定")]
+    [Tooltip("会話終了後に読み込むシーン名")]
+    public string nextSceneName = "OutdoorScene"; // インスペクターから変更可能
+
     [Header("シナリオテキスト")]
     [TextArea(2, 5)]
     public List<string> sentences = new List<string>()
@@ -76,8 +80,15 @@ public class OpeningDialogue : MonoBehaviour
         }
         else
         {
-            // 最後のセリフが終わったらそのまま移動
-            SceneManager.LoadScene("stage_mountain");
+            // インスペクターで設定したシーン名へ遷移
+            if (!string.IsNullOrEmpty(nextSceneName))
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
+            else
+            {
+                Debug.LogWarning("遷移先のシーン名が設定されていません。");
+            }
         }
     }
 
