@@ -195,7 +195,7 @@ public class Player : MonoBehaviour
         rb.gravityScale = 0f;
 
         Vector2 respawnPosition = new Vector2(
-            rb.position.x - 5f,
+            rb.position.x - 6f,
             respawnY
         );
 
