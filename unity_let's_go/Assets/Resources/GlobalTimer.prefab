@@ -50,3 +50,4 @@ MonoBehaviour:
   - stage_class
   - stage_game_over
   - ending
+  - stage_in_home

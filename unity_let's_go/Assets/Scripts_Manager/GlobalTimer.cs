@@ -34,7 +34,7 @@ public class GlobalTimer : MonoBehaviour
     [SerializeField] private float totalSeconds = 300f;
 
     [Header("タイマーを止めておくシーン（タイトル画面など）")]
-    [SerializeField] private string[] pausedScenes = { "Title", "stage_class" };
+    [SerializeField] private string[] pausedScenes = { "Title", "stage_class", "stage_in_home", "ending", "stage_game_over" };
 
     /// <summary>残り秒数</summary>
     public float RemainingSeconds { get; private set; }
