@@ -2552,7 +2552,7 @@ MonoBehaviour:
   portalPanel: {fileID: 1440460193}
   remainingTime: 30
   correctCode: 1234
-  gameOverSceneName: Title
+  gameOverSceneName: stage_game_over
 --- !u!1 &1444003491
 GameObject:
   m_ObjectHideFlags: 0
