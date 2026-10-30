@@ -200,6 +200,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   moveSpeed: 10
   jumpForce: 20
+  speedUp: 15
+  speedUpTime: 5
   groundChecker: {fileID: 1114388110995992557}
   checkerRadius: 0.1
   groundLayer:
@@ -241,7 +243,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: cedebdd635607984988262702d0f7b4c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.52
   m_Pitch: 1
   Loop: 0
   Mute: 0
