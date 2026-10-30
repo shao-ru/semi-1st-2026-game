@@ -51,3 +51,5 @@ MonoBehaviour:
   - stage_game_over
   - ending
   - stage_in_home
+  - stage_story
+  - stage_story(2)
