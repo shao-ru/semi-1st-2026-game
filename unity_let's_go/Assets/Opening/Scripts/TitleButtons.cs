@@ -12,7 +12,13 @@ public class TitleButtons : MonoBehaviour
     public void StartButton()
     {
         GlobalTimer.ResetTimer(); // 全体タイマーを最初に戻す
-        SceneManager.LoadScene("stage_mountain"); // ゲーム本編の最初のステージ
+        SceneManager.LoadScene("stage_story"); // ゲーム本編の最初のステージ
+    }
+
+    public void TutorialButton()
+    {
+        GlobalTimer.ResetTimer(); // 全体タイマーを最初に戻す
+        SceneManager.LoadScene("stage_in_home"); // stage_in_homeステージ
     }
 
     // 設定画面を表示するメソッド（動画内：超コンフィグパネル）[7]
