@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc9315988f13ff4787b8187f326a60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveLeft
-  pointA: {x: 0, y: -33, z: 0}
+  pointA: {x: 0, y: -30, z: 0}
   pointB: {x: 0, y: 20, z: 0}
   speed: 1
 --- !u!212 &689461455
