@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: "My project\u3000\u30BC\u30DF"
+  companyName: "\u9E97\u6FA4\u5927\u5B66\u5DE5\u5B66\u90E8"
+  productName: "\u6025\u3052 OO\u541B\uFF08\u90B5\u30BC\u30DF\uFF09"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -294,7 +294,10 @@ PlayerSettings:
   androidSymbolsSizeThreshold: 800
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons: []
-  m_BuildTargetBatching: []
+  m_BuildTargetBatching:
+  - m_BuildTarget: Standalone
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs: []
   m_BuildTargetGraphicsJobMode: []
@@ -680,7 +683,6 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  enableDirectStorage: 0
   cloudProjectId: 87da5c96-81c1-4fa3-944e-9783bd37d026
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
