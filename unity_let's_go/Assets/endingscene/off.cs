@@ -1,24 +1,43 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement; // シーン管理に必要
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
     [SerializeField] private string nextSceneName = "Title"; // 移動先のシーン名
-    [SerializeField] private float delayTime = 3.0f;             // 待つ秒数（3秒）
+    [SerializeField] private float delayTime = 3.0f;         // 待つ秒数
+    [SerializeField] private KeyCode skipKey = KeyCode.Tab;   // スキップキーをTabに変更
+
+    private bool isTransitioning = false; // 二重遷移防止フラグ
 
     void Start()
     {
-        // コルーチンを開始
         StartCoroutine(LoadSceneAfterDelay());
+    }
+
+    void Update()
+    {
+        // 待機中にTabキーが押されたら即時遷移
+        if (!isTransitioning && Input.GetKeyDown(skipKey))
+        {
+            ChangeScene();
+        }
     }
 
     IEnumerator LoadSceneAfterDelay()
     {
-        // 指定した秒数だけ待つ
         yield return new WaitForSeconds(delayTime);
 
-        // シーンを読み込む（変数 nextSceneName を指定し、閉じカッコとセミコロンを追加）
+        // キー入力で既に遷移していなければ実行
+        if (!isTransitioning)
+        {
+            ChangeScene();
+        }
+    }
+
+    private void ChangeScene()
+    {
+        isTransitioning = true;
         SceneManager.LoadScene(nextSceneName);
     }
 }

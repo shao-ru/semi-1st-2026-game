@@ -27,7 +27,7 @@ public class TitleButtons : MonoBehaviour
     public void StartButton()
     {
         if (isTransitioning) return;
-        StartCoroutine(LoadSceneWithSE("stage_story"));
+        StartCoroutine(LoadSceneWithSE("stage_Levelcont"));
     }
 
     // チュートリアルボタン

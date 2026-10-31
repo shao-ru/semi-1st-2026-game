@@ -41,5 +41,44 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/endingscene/ending.unity
     guid: bb15f457ca4c1d842b07307eb08c2760
+  - enabled: 1
+    path: Assets/Scenes/easy/stage_commute_easy.unity
+    guid: 59e3c5336a6965b4f99267ff304055ca
+  - enabled: 1
+    path: Assets/Scenes/easy/stage_compus_easy.unity
+    guid: 27a7ebf6e9f9f884c869665d9a534fe5
+  - enabled: 1
+    path: Assets/Scenes/easy/stage_mountain_easy.unity
+    guid: 6645eb93ea35c1a46b04086264cd910a
+  - enabled: 1
+    path: Assets/Scenes/stage_Levelcont.unity
+    guid: 4457dea412b9d67469741a8cb9719a1d
+  - enabled: 1
+    path: Assets/Scenes/hard/stage_mountain_hard.unity
+    guid: f8382dde92ba7cb43b2f906fb19fef92
+  - enabled: 1
+    path: Assets/Scenes/hard/stage_compus_hard.unity
+    guid: 0d3d4c82b17834e41a27ddeef4ed0cb3
+  - enabled: 1
+    path: Assets/Scenes/hard/stage_commute_hard.unity
+    guid: f48474cd4d572a449a94e2de1a230331
+  - enabled: 1
+    path: Assets/Scenes/Ultimate/stage_mountain_Ultimate.unity
+    guid: 3ddc56a596bcaa641957e4d74428c705
+  - enabled: 1
+    path: Assets/Scenes/Ultimate/stage_commute_Ultimate.unity
+    guid: e33d46c77cd50f2418488360500af99e
+  - enabled: 1
+    path: Assets/Scenes/Ultimate/stage_compus_Ultimate.unity
+    guid: 0e33a414e6bbf874eaf7aebfb0635eed
+  - enabled: 1
+    path: Assets/Scenes/stage_story_pac/stage_story_ultimate.unity
+    guid: 29b80a8c3d75f7b44a5eb8d0fac8f111
+  - enabled: 1
+    path: Assets/Scenes/stage_story_pac/stage_story_easy.unity
+    guid: ba97ef787303a804a87064056bded3d8
+  - enabled: 1
+    path: Assets/Scenes/stage_story_pac/stage_story_hard.unity
+    guid: 5032729b57bb49d48a83265ac0082321
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -2553,7 +2553,7 @@ MonoBehaviour:
   submitButton: {fileID: 40855440}
   portalPanel: {fileID: 1440460193}
   remainingTime: 25
-  correctCode: 1234
+  correctCode: 4829
   clearSceneName: ending
   gameOverSceneName: stage_game_over
   audioSource: {fileID: 1440460198}
@@ -2573,7 +2573,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.06
+  m_Volume: 0.71
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2670,7 +2670,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.41
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
