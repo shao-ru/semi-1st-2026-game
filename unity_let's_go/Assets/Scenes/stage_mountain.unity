@@ -407,7 +407,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1149322057
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2705427735645337106, guid: cecfac25bfc015c44aa56ba089a7eb9d, type: 3}
@@ -891,7 +891,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1149322057
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2705427735645337106, guid: cecfac25bfc015c44aa56ba089a7eb9d, type: 3}
@@ -1210,8 +1210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   target: {fileID: 373470195}
-  minX: 0
-  maxX: 82
+  minX: 1.5
+  maxX: 86
   minY: 0
   maxY: 0
 --- !u!82 &519420034
@@ -4135,7 +4135,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1744562633
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -3808348080276341784, guid: 5512ec6a507b88445b6a8f263f1e5f9a, type: 3}
