@@ -533,7 +533,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1149322057
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2705427735645337106, guid: cecfac25bfc015c44aa56ba089a7eb9d, type: 3}
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b135a128a81c24b8659bedead998ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneChange
-  nextSceneName: 
+  nextSceneName: stage_in_compus
 --- !u!212 &1091691939
 SpriteRenderer:
   serializedVersion: 2
@@ -1134,8 +1134,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 497230761
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7070674711892853185, guid: 74cc0b6930bbfe349bc9aa717ba80a6b, type: 3}
@@ -1303,7 +1303,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1149322057
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2705427735645337106, guid: cecfac25bfc015c44aa56ba089a7eb9d, type: 3}
